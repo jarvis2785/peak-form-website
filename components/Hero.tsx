@@ -6,11 +6,11 @@ export default function Hero() {
   return (
     <section className="relative min-h-[100svh] w-full overflow-hidden flex items-end">
       <Image
-        src="/images/founder-hero.jpg"
+        src="/images/founder-gym-4.jpg"
         alt="Dhanil Shah, founder of Peakform"
         fill
         priority
-        className="object-cover object-center"
+        className="object-cover object-[50%_15%]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/10" />
 
