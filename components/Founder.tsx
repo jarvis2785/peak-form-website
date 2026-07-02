@@ -4,7 +4,7 @@ import SectionHeading from "./SectionHeading";
 
 export default function Founder() {
   return (
-    <section className="container-px py-24 md:py-32 border-t border-foreground/10">
+    <section id="founder" className="container-px py-24 md:py-32 border-t border-foreground/10">
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <FadeUp>
           <div className="grid grid-cols-2 gap-4">

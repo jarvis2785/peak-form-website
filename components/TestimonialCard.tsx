@@ -9,11 +9,12 @@ export type Testimonial = {
   credential: string;
   quote: string;
   expanded?: string;
+  instagramUrl?: string;
 };
 
 export default function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   const [open, setOpen] = useState(false);
-  const { photo, name, credential, quote, expanded } = testimonial;
+  const { photo, name, credential, quote, expanded, instagramUrl } = testimonial;
   const expandable = Boolean(expanded);
 
   return (
@@ -43,11 +44,33 @@ export default function TestimonialCard({ testimonial }: { testimonial: Testimon
               {open ? "Close Story" : "Read Full Story"}
             </button>
             {open && (
-              <p className="mt-4 text-sm text-foreground/70 leading-relaxed border-t border-foreground/10 pt-4">
-                {expanded}
-              </p>
+              <div className="mt-4 border-t border-foreground/10 pt-4">
+                <p className="text-sm text-foreground/70 leading-relaxed">
+                  {expanded}
+                </p>
+                {instagramUrl && (
+                  <a
+                    href={instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-block text-xs text-accent hover:text-foreground transition-colors"
+                  >
+                    View on Instagram →
+                  </a>
+                )}
+              </div>
             )}
           </>
+        )}
+        {!expandable && instagramUrl && (
+          <a
+            href={instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 self-start text-xs text-accent hover:text-foreground transition-colors"
+          >
+            View on Instagram →
+          </a>
         )}
       </div>
     </div>
