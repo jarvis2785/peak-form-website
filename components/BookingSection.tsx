@@ -3,6 +3,7 @@
 import { InlineWidget } from "react-calendly";
 import FadeUp from "./FadeUp";
 import SectionHeading from "./SectionHeading";
+import QualifierForm from "./QualifierForm";
 
 export default function BookingSection() {
   return (
@@ -16,10 +17,19 @@ export default function BookingSection() {
         </p>
       </FadeUp>
 
-      {/* QUALIFYING QUESTIONS GO HERE - to be added before Calendly embed */}
-
       <FadeUp delay={0.2}>
-        <div className="mt-12 max-w-4xl mx-auto bg-foreground">
+        <div className="mt-12 max-w-2xl mx-auto">
+          <QualifierForm />
+        </div>
+      </FadeUp>
+
+      <FadeUp delay={0.1}>
+        <p className="mt-24 text-center text-xs uppercase tracking-[0.2em] text-foreground/40">
+          Prefer to skip ahead? Book directly below.
+        </p>
+      </FadeUp>
+      <FadeUp delay={0.2}>
+        <div className="mt-6 max-w-4xl mx-auto bg-foreground">
           <InlineWidget
             url="https://calendly.com/peakform-dhanil/1-on-1-with-dhanil"
             styles={{ height: "700px", minWidth: "320px" }}
