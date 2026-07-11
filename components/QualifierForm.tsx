@@ -51,7 +51,11 @@ const stepTransition = {
   transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-export default function QualifierForm() {
+export default function QualifierForm({
+  onSubmitted,
+}: {
+  onSubmitted?: () => void;
+} = {}) {
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [submitted, setSubmitted] = useState(false);
@@ -76,6 +80,7 @@ export default function QualifierForm() {
     });
 
     setSubmitted(true);
+    onSubmitted?.();
   };
 
   if (submitted) {

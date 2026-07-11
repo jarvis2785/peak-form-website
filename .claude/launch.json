@@ -6,12 +6,6 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 2785
-    },
-    {
-      "name": "peakform-preview",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["next", "dev", "-p", "4321"],
-      "port": 4321
     }
   ]
 }

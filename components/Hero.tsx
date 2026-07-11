@@ -1,8 +1,8 @@
 import Image from "next/image";
-import CTAButton from "./CTAButton";
+import ContinueButton from "./ContinueButton";
 import FadeUp from "./FadeUp";
 
-export default function Hero() {
+export default function Hero({ onContinue }: { onContinue: () => void }) {
   return (
     <section className="relative min-h-[100svh] w-full overflow-hidden flex items-end">
       <Image
@@ -27,15 +27,8 @@ export default function Hero() {
           </p>
         </FadeUp>
         <FadeUp delay={0.3}>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <CTAButton href="#book">Book Your Call</CTAButton>
-            <CTAButton
-              href="https://instagram.com/dhanil.shah"
-              variant="secondary"
-              target="_blank"
-            >
-              DM Peak on Instagram
-            </CTAButton>
+          <div className="mt-10">
+            <ContinueButton onClick={onContinue} className="w-full sm:w-auto" />
           </div>
         </FadeUp>
       </div>

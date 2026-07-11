@@ -2,7 +2,7 @@ import FadeUp from "./FadeUp";
 import SectionHeading from "./SectionHeading";
 import TestimonialCard, { type Testimonial } from "./TestimonialCard";
 
-const testimonials: Testimonial[] = [
+export const testimonials: Testimonial[] = [
   {
     photo: "/images/testimonial-aryan-photo.jpg",
     name: "Aryan Bhatia",
