@@ -30,15 +30,16 @@ export default function FounderVideo({ onContinue }: { onContinue: () => void })
 
       <FadeUp delay={0.15}>
         <div className="mt-10 max-w-md mx-auto w-full border border-foreground/15">
-          <video
-            src="/videos/founder-video.mp4"
-            autoPlay
-            muted
-            playsInline
-            loop={false}
-            controls
-            className="w-full block"
-          />
+          <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/gntmsPZjoHg?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&playsinline=1"
+              title="Watch This From Dhanil"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+              width="100%"
+            />
+          </div>
         </div>
       </FadeUp>
 
