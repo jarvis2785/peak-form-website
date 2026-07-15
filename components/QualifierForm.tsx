@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { InlineWidget } from "react-calendly";
 import CountryPhoneInput from "./CountryPhoneInput";
+
+const CALENDLY_URL = "https://calendly.com/peakform-dhanil/1-on-1-with-dhanil";
 
 const GOAL_OPTIONS = [
   "Build Muscle Mass",
@@ -51,14 +54,18 @@ const stepTransition = {
   transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-export default function QualifierForm({
-  onSubmitted,
-}: {
-  onSubmitted?: () => void;
-} = {}) {
+export default function QualifierForm() {
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [submitted, setSubmitted] = useState(false);
+  const [showCalendly, setShowCalendly] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = showCalendly ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showCalendly]);
 
   const selectAndAdvance = (field: "goal" | "timing", value: string) => {
     setAnswers((prev) => ({ ...prev, [field]: value }));
@@ -80,35 +87,33 @@ export default function QualifierForm({
     });
 
     setSubmitted(true);
-    onSubmitted?.();
+    setShowCalendly(true);
   };
 
-  if (submitted) {
-    return (
-      <div className="border border-foreground/15 bg-foreground/[0.02] p-10 md:p-16 text-center">
-        <p className="mb-3 text-xs md:text-sm uppercase tracking-[0.3em] text-accent">
-          Confirmed
-        </p>
-        <h3 className="font-display text-3xl md:text-5xl uppercase leading-[0.95]">
-          Application Received
-        </h3>
-        <p className="mt-6 text-foreground/70 max-w-md mx-auto leading-relaxed">
-          A member of Dhanil&apos;s team will reach out within 24 hours to
-          confirm your call.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div className="border border-foreground/15 bg-foreground/[0.02] p-8 md:p-12">
-      <p className="text-center text-sm text-foreground/60 mb-8">
+    <>
+      {submitted ? (
+        <div className="border border-foreground/15 bg-foreground/[0.02] p-10 md:p-16 text-center">
+          <p className="mb-3 text-xs md:text-sm uppercase tracking-[0.3em] text-accent-bright">
+            Confirmed
+          </p>
+          <h3 className="font-display text-3xl md:text-5xl uppercase leading-[0.95]">
+            Application Received
+          </h3>
+          <p className="mt-6 text-muted max-w-md mx-auto leading-relaxed">
+            A member of Dhanil&apos;s team will reach out within 24 hours to
+            confirm your call.
+          </p>
+        </div>
+      ) : (
+        <div className="border border-foreground/15 bg-foreground/[0.02] p-8 md:p-12">
+      <p className="text-center text-sm text-muted mb-8">
         Takes 60 seconds. We only work with founders serious about this.
       </p>
 
       <div className="mb-10">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-xs uppercase tracking-[0.2em] text-accent">
+          <p className="text-xs uppercase tracking-[0.2em] text-accent-bright">
             Step {step} of 3
           </p>
           {step > 1 && (

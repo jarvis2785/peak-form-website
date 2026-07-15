@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import FadeUp from "./FadeUp";
 import SectionHeading from "./SectionHeading";
 import TestimonialCard from "./TestimonialCard";
-import ContinueButton from "./ContinueButton";
+import CountUp from "./CountUp";
 import { testimonials } from "./Results";
 
 const slideTransition = {
@@ -18,11 +17,7 @@ const slideTransition = {
 const arrowClass =
   "w-12 h-12 shrink-0 border border-foreground/20 hover:border-accent hover:bg-accent/10 transition-colors flex items-center justify-center text-xl";
 
-export default function TestimonialCarousel({
-  onContinue,
-}: {
-  onContinue: () => void;
-}) {
+export default function TestimonialCarousel() {
   const [index, setIndex] = useState(0);
   const count = testimonials.length;
 
@@ -30,10 +25,8 @@ export default function TestimonialCarousel({
   const next = () => setIndex((i) => (i + 1) % count);
 
   return (
-    <section className="container-px pt-28 pb-24 md:pt-36 md:pb-32">
-      <FadeUp>
-        <SectionHeading eyebrow="Proof" title="Results" align="center" />
-      </FadeUp>
+    <section id="results" className="container-px py-24 md:py-32 border-t border-foreground/10">
+      <SectionHeading eyebrow="Case Studies" title="Results" align="center" />
 
       <div className="mt-12 max-w-md mx-auto">
         <AnimatePresence mode="wait">
@@ -64,13 +57,12 @@ export default function TestimonialCarousel({
           </button>
         </div>
 
-        <p className="mt-8 text-center text-xs text-foreground/50 uppercase tracking-[0.2em]">
-          20+ founders coached — these are a few of their stories
+        <p className="mt-8 text-center text-xs text-foreground/70 uppercase tracking-[0.2em]">
+          <span className="text-accent-bright">
+            <CountUp to={20} suffix="+" />
+          </span>{" "}
+          founders coached — these are a few of their stories
         </p>
-
-        <div className="mt-10 text-center">
-          <ContinueButton onClick={onContinue} className="w-full sm:w-auto" />
-        </div>
       </div>
     </section>
   );

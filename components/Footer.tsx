@@ -12,7 +12,7 @@ export default function Footer() {
         className="object-contain"
       />
 
-      <p className="text-xs text-foreground/40 uppercase tracking-[0.2em] order-last sm:order-none">
+      <p className="text-xs text-foreground/60 uppercase tracking-[0.2em] order-last sm:order-none">
         Peakform — Fitness Coaching for Founders
       </p>
 
@@ -21,7 +21,7 @@ export default function Footer() {
           href="https://instagram.com/dhanil.shah"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-accent transition-colors"
+          className="hover:text-accent-bright transition-colors"
         >
           @dhanil.shah
         </Link>
@@ -29,7 +29,7 @@ export default function Footer() {
           href="https://instagram.com/peakformhq"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-accent transition-colors"
+          className="hover:text-accent-bright transition-colors"
         >
           @peakformhq
         </Link>

@@ -5,9 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import CTAButton from "./CTAButton";
 
 const links = [
-  { label: "The System", href: "#protocol" },
+  { label: "Proof", href: "#proof" },
   { label: "Results", href: "#results" },
-  { label: "Who's Coaching You", href: "#founder" },
+  { label: "The System", href: "#protocol" },
   { label: "Book a Call", href: "#book" },
 ];
 
@@ -39,7 +39,7 @@ export default function Nav() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 container-px py-6 flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 z-40 container-px py-6 flex items-center justify-between bg-gradient-to-b from-background/90 via-background/55 to-transparent">
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -103,7 +103,7 @@ export default function Nav() {
                     delay: 0.1 + i * 0.06,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="font-display text-4xl sm:text-6xl uppercase leading-tight text-foreground hover:text-accent transition-colors"
+                  className="font-display text-4xl sm:text-6xl uppercase leading-tight text-foreground hover:text-accent-bright transition-colors"
                 >
                   {link.label}
                 </motion.a>

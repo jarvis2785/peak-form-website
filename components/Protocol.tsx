@@ -32,9 +32,7 @@ const phases = [
 export default function Protocol() {
   return (
     <section id="protocol" className="container-px py-24 md:py-32 border-t border-foreground/10">
-      <FadeUp>
-        <SectionHeading eyebrow="How It Works" title="The System" />
-      </FadeUp>
+      <SectionHeading eyebrow="How It Works" title="The System" />
 
       <div className="mt-16 grid lg:grid-cols-2 gap-12 lg:gap-20">
         <FadeUp delay={0.1}>
@@ -58,21 +56,21 @@ export default function Protocol() {
           </div>
         </FadeUp>
 
-        <div className="flex flex-col divide-y divide-foreground/10">
+        <div className="flex flex-col gap-5">
           {phases.map((phase, i) => (
-            <FadeUp key={phase.number} delay={i * 0.1} className="py-8 first:pt-0">
-              <div className="flex gap-6">
-                <span className="font-display text-3xl md:text-4xl text-accent shrink-0">
+            <FadeUp key={phase.number} delay={i * 0.1}>
+              <div className="flex gap-6 border border-foreground/10 bg-surface p-6 md:p-8 transition-all duration-300 hover:border-foreground/25 hover:-translate-y-0.5 hover:shadow-[0_0_36px_-12px_rgba(59,90,135,0.5)]">
+                <span className="font-display text-3xl md:text-4xl text-accent-bright shrink-0">
                   {phase.number}
                 </span>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.25em] text-foreground/50">
+                  <p className="text-xs uppercase tracking-[0.25em] text-foreground/60">
                     {phase.label}
                   </p>
                   <h3 className="mt-2 font-display text-2xl md:text-3xl uppercase leading-tight">
                     {phase.title}
                   </h3>
-                  <p className="mt-3 text-foreground/70 leading-relaxed max-w-lg">
+                  <p className="mt-3 text-muted leading-relaxed max-w-lg">
                     {phase.body}
                   </p>
                 </div>
