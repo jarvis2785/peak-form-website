@@ -2,10 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { InlineWidget } from "react-calendly";
 import CountryPhoneInput from "./CountryPhoneInput";
-
-const CALENDLY_URL = "https://calendly.com/peakform-dhanil/1-on-1-with-dhanil";
 
 const GOAL_OPTIONS = [
   "Build Muscle Mass",
@@ -250,5 +247,7 @@ export default function QualifierForm() {
         )}
       </AnimatePresence>
     </div>
+      )}
+    </>
   );
 }
