@@ -45,7 +45,7 @@ export default function CTAButton({
   };
 
   const base =
-    "relative inline-block px-9 py-4 md:px-10 md:py-5 text-sm md:text-base tracking-[0.15em] uppercase font-sans font-semibold transition-[background-color,color,border-color,box-shadow] duration-300";
+    "relative inline-block px-9 py-4 md:px-10 md:py-5 text-sm md:text-base tracking-[0.08em] uppercase font-sans font-semibold transition-[background-color,color,border-color,box-shadow] duration-200";
   const styles =
     variant === "primary"
       ? "bg-accent text-foreground shadow-[0_0_36px_-8px_rgba(59,90,135,0.65)] hover:bg-foreground hover:text-background hover:shadow-[0_0_44px_-8px_rgba(59,90,135,0.5)]"

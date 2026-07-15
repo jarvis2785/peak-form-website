@@ -17,8 +17,8 @@ const config: Config = {
         "accent-bright": "#6C9BD2",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
-        display: ["var(--font-bebas)", "sans-serif"],
+        sans: ["var(--font-dm-sans)", "sans-serif"],
+        display: ["var(--font-space-grotesk)", "sans-serif"],
       },
       borderRadius: {
         none: "0px",

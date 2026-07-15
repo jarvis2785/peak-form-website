@@ -24,10 +24,10 @@ export default function SectionHeading({
 }) {
   const reduceMotion = useReducedMotion();
 
-  const eyebrowClass = `mb-3 text-xs md:text-sm uppercase tracking-[0.3em] ${
+  const eyebrowClass = `mb-3 text-xs md:text-sm font-medium uppercase tracking-[0.08em] ${
     light ? "text-background/60" : "text-accent-bright"
   }`;
-  const titleClass = `font-display text-5xl md:text-7xl leading-[0.95] uppercase ${
+  const titleClass = `font-display font-bold text-3xl md:text-5xl leading-[1.05] tracking-[-0.02em] ${
     light ? "text-background" : "text-foreground"
   }`;
 

@@ -26,7 +26,11 @@ export default function TestimonialCarousel() {
 
   return (
     <section id="results" className="container-px py-24 md:py-32 border-t border-foreground/10">
-      <SectionHeading eyebrow="Case Studies" title="Results" align="center" />
+      <SectionHeading
+        eyebrow="Real Clients. Real Results."
+        title="Results"
+        align="center"
+      />
 
       <div className="mt-12 max-w-md mx-auto">
         <AnimatePresence mode="wait">
@@ -57,7 +61,7 @@ export default function TestimonialCarousel() {
           </button>
         </div>
 
-        <p className="mt-8 text-center text-xs text-foreground/70 uppercase tracking-[0.2em]">
+        <p className="mt-8 text-center text-xs font-medium text-foreground/70 uppercase tracking-[0.08em]">
           <span className="text-accent-bright">
             <CountUp to={20} suffix="+" />
           </span>{" "}

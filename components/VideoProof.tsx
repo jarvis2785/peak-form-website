@@ -67,7 +67,7 @@ function VideoCard({ id, caption }: { id: string; caption: string }) {
             </button>
           )}
         </div>
-        <p className="border-t border-foreground/10 px-5 py-4 text-xs uppercase tracking-[0.2em] text-muted">
+        <p className="border-t border-foreground/10 px-5 py-4 text-xs font-medium uppercase tracking-[0.08em] text-muted">
           {caption}
         </p>
       </div>

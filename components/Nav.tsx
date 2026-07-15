@@ -8,7 +8,7 @@ const links = [
   { label: "Proof", href: "#proof" },
   { label: "Results", href: "#results" },
   { label: "The System", href: "#protocol" },
-  { label: "Book a Call", href: "#book" },
+  { label: "Book Your Call", href: "#book" },
 ];
 
 export default function Nav() {
@@ -52,7 +52,7 @@ export default function Nav() {
             <span className="block h-[2px] w-full bg-foreground transition-colors group-hover:bg-accent" />
             <span className="block h-[2px] w-4 bg-foreground transition-colors group-hover:bg-accent" />
           </span>
-          <span className="font-display text-lg tracking-[0.15em] uppercase">
+          <span className="font-display font-bold text-lg tracking-[0.08em] uppercase">
             Peakform
           </span>
         </button>
@@ -76,7 +76,7 @@ export default function Nav() {
             className="fixed inset-0 z-50 bg-background flex flex-col"
           >
             <div className="container-px py-6 flex items-center justify-between">
-              <span className="font-display text-lg tracking-[0.15em] uppercase">
+              <span className="font-display font-bold text-lg tracking-[0.08em] uppercase">
                 Peakform
               </span>
               <button
@@ -103,7 +103,7 @@ export default function Nav() {
                     delay: 0.1 + i * 0.06,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="font-display text-4xl sm:text-6xl uppercase leading-tight text-foreground hover:text-accent-bright transition-colors"
+                  className="font-display font-bold text-4xl sm:text-5xl tracking-[-0.02em] leading-tight text-foreground hover:text-accent-bright transition-colors"
                 >
                   {link.label}
                 </motion.a>

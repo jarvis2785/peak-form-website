@@ -19,14 +19,14 @@ export default function ForNotFor() {
     <section className="container-px py-24 md:py-32 border-t border-foreground/10">
       <div className="grid md:grid-cols-2">
         <FadeUp className="border-b md:border-b-0 md:border-r border-foreground/10 pb-12 md:pb-0 md:pr-12">
-          <p className="text-xs uppercase tracking-[0.3em] text-accent-bright mb-6">
+          <p className="text-xs font-medium uppercase tracking-[0.08em] text-accent-bright mb-6">
             This Is For
           </p>
           <ul className="space-y-5">
             {forList.map((item) => (
               <li
                 key={item}
-                className="text-xl md:text-2xl leading-snug font-display uppercase"
+                className="text-lg md:text-xl leading-snug font-display font-bold tracking-[-0.01em]"
               >
                 {item}
               </li>
@@ -35,14 +35,14 @@ export default function ForNotFor() {
         </FadeUp>
 
         <FadeUp delay={0.1} className="pt-12 md:pt-0 md:pl-12">
-          <p className="text-xs uppercase tracking-[0.3em] text-foreground/55 mb-6">
+          <p className="text-xs font-medium uppercase tracking-[0.08em] text-foreground/55 mb-6">
             This Is Not For
           </p>
           <ul className="space-y-5">
             {notForList.map((item) => (
               <li
                 key={item}
-                className="text-xl md:text-2xl leading-snug font-display uppercase text-foreground/55"
+                className="text-lg md:text-xl leading-snug font-display font-bold tracking-[-0.01em] text-foreground/55"
               >
                 {item}
               </li>

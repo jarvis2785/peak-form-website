@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Bebas_Neue } from "next/font/google";
+import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
-const bebasNeue = Bebas_Neue({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-bebas",
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
@@ -31,7 +30,7 @@ export default function RootLayout({
       <head>
         {/* META PIXEL PLACEHOLDER - insert tracking code here */}
       </head>
-      <body className={`${inter.variable} ${bebasNeue.variable} antialiased bg-background text-foreground font-sans`}>
+      <body className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground font-sans`}>
         {children}
       </body>
     </html>

@@ -35,7 +35,7 @@ export default function Hero() {
   const reduceMotion = useReducedMotion();
 
   const headlineClass =
-    "font-display text-5xl sm:text-6xl md:text-8xl leading-[0.92] uppercase max-w-5xl";
+    "font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.04] tracking-[-0.03em] max-w-4xl";
   const accentClass = "text-accent-bright highlight-shadow";
 
   return (
@@ -61,12 +61,12 @@ export default function Hero() {
       {reduceMotion ? (
         <div
           aria-hidden
-          className="absolute -left-32 bottom-0 h-[34rem] w-[54rem] rounded-full bg-accent/[0.13] blur-[120px] pointer-events-none"
+          className="absolute -left-32 bottom-0 h-[34rem] w-[54rem] rounded-full bg-accent/[0.08] blur-[120px] pointer-events-none"
         />
       ) : (
         <motion.div
           aria-hidden
-          className="absolute -left-32 bottom-0 h-[34rem] w-[54rem] rounded-full bg-accent/[0.13] blur-[120px] pointer-events-none will-change-transform"
+          className="absolute -left-32 bottom-0 h-[34rem] w-[54rem] rounded-full bg-accent/[0.08] blur-[120px] pointer-events-none will-change-transform"
           animate={{
             x: [0, 70, 10, -50, 0],
             y: [0, -60, 25, -30, 0],
@@ -78,8 +78,8 @@ export default function Hero() {
 
       <div className="relative z-10 container-px w-full pb-16 md:pb-24 pt-40">
         <FadeUp>
-          <p className="mb-5 text-xs md:text-sm uppercase tracking-[0.35em] text-accent-bright">
-            The Peak Form Protocol
+          <p className="mb-5 text-xs md:text-sm font-medium uppercase tracking-[0.08em] text-accent-bright">
+            1-On-1 Coaching For Founders
           </p>
         </FadeUp>
 
@@ -116,12 +116,21 @@ export default function Hero() {
 
         <FadeUp delay={0.45}>
           <p className="mt-6 max-w-xl text-base md:text-lg text-muted text-balance">
-            Data-driven 1-on-1 coaching for founders across 4 countries. Four
-            hours a week, engineered around your calendar — built for decades
-            of output, not a 12-week sprint.
+            Most founders build the company and let the body slide. Peak Form
+            fixes that — a data-driven system engineered around your calendar,
+            built for decades of output.
           </p>
         </FadeUp>
-        <FadeUp delay={0.6}>
+        <FadeUp delay={0.55}>
+          <p className="mt-5 text-sm font-medium text-foreground/70">
+            <span className="text-accent-bright">20+</span> founders coached
+            <span className="mx-2 text-foreground/30">·</span>
+            <span className="text-accent-bright">4</span> countries
+            <span className="mx-2 text-foreground/30">·</span>
+            <span className="text-accent-bright">4 hrs</span>/week protocol
+          </p>
+        </FadeUp>
+        <FadeUp delay={0.7}>
           <div className="mt-10">
             <CTAButton
               href="#book"

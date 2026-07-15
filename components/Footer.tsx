@@ -12,11 +12,11 @@ export default function Footer() {
         className="object-contain"
       />
 
-      <p className="text-xs text-foreground/60 uppercase tracking-[0.2em] order-last sm:order-none">
+      <p className="text-xs font-medium text-foreground/60 uppercase tracking-[0.08em] order-last sm:order-none">
         Peakform — Fitness Coaching for Founders
       </p>
 
-      <div className="flex gap-6 text-xs uppercase tracking-[0.2em]">
+      <div className="flex gap-6 text-xs font-medium uppercase tracking-[0.08em]">
         <Link
           href="https://instagram.com/dhanil.shah"
           target="_blank"

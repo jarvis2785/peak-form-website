@@ -46,7 +46,7 @@ export default function TestimonialCard({ testimonial }: { testimonial: Testimon
         </div>
       )}
       <div className="p-7 md:p-9 flex flex-col grow">
-        <p className="font-display text-xl md:text-2xl leading-snug uppercase">
+        <p className="font-display font-medium text-lg md:text-xl leading-snug tracking-[-0.01em]">
           &ldquo;{renderQuote(quote, highlights)}&rdquo;
         </p>
         <div className="mt-6">
@@ -59,7 +59,7 @@ export default function TestimonialCard({ testimonial }: { testimonial: Testimon
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="mt-6 text-xs uppercase tracking-[0.2em] text-accent-bright hover:text-foreground transition-colors self-start"
+              className="mt-6 text-xs font-medium uppercase tracking-[0.08em] text-accent-bright hover:text-foreground transition-colors self-start"
               aria-expanded={open}
             >
               {open ? "Close Story" : "Read Full Story"}
