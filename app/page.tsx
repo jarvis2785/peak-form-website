@@ -7,6 +7,7 @@ import ForNotFor from "@/components/ForNotFor";
 import CTAButton from "@/components/CTAButton";
 import FadeUp from "@/components/FadeUp";
 import BookingSection from "@/components/BookingSection";
+import StickyCTA from "@/components/StickyCTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -33,6 +34,7 @@ export default function Home() {
 
         <BookingSection />
       </main>
+      <StickyCTA />
       <Footer />
     </>
   );

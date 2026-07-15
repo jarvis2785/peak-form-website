@@ -2,10 +2,38 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { InlineWidget } from "react-calendly";
+import { PopupModal } from "react-calendly";
 import CountryPhoneInput from "./CountryPhoneInput";
 
 const CALENDLY_URL = "https://calendly.com/peakform-dhanil/1-on-1-with-dhanil";
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// National-number digit counts per dial code; anything unlisted falls back
+// to the E.164-ish 7–14 range.
+const PHONE_LENGTH_RULES: Record<string, { min: number; max: number }> = {
+  "+91": { min: 10, max: 10 },
+  "+1": { min: 10, max: 10 },
+  "+44": { min: 9, max: 10 },
+  "+61": { min: 9, max: 9 },
+  "+65": { min: 8, max: 8 },
+  "+971": { min: 8, max: 9 },
+};
+const DEFAULT_PHONE_RULE = { min: 7, max: 14 };
+
+function validateEmail(email: string): string | undefined {
+  return EMAIL_PATTERN.test(email.trim())
+    ? undefined
+    : "Enter a valid email address";
+}
+
+function validatePhone(phone: string, dialCode: string): string | undefined {
+  const digits = phone.replace(/\D/g, "");
+  const rule = PHONE_LENGTH_RULES[dialCode] ?? DEFAULT_PHONE_RULE;
+  return digits.length >= rule.min && digits.length <= rule.max
+    ? undefined
+    : "Enter a valid phone number";
+}
 
 const GOAL_OPTIONS = [
   "Build Muscle Mass",
@@ -47,6 +75,9 @@ const optionClassSelected =
 const inputClass =
   "w-full bg-transparent border border-foreground/20 focus:border-accent outline-none px-4 py-3 text-sm placeholder:text-foreground/40 transition-colors";
 
+const inputClassError =
+  "w-full bg-transparent border border-red-500 focus:border-red-500 outline-none px-4 py-3 text-sm placeholder:text-foreground/40 transition-colors";
+
 const stepTransition = {
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
@@ -59,6 +90,7 @@ export default function QualifierForm() {
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [submitted, setSubmitted] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
 
   useEffect(() => {
     document.body.style.overflow = showCalendly ? "hidden" : "";
@@ -74,6 +106,15 @@ export default function QualifierForm() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Invalid email or phone blocks the webhook AND the Calendly popup.
+    const emailError = validateEmail(answers.email);
+    const phoneError = validatePhone(answers.phone, answers.countryCode);
+    if (emailError || phoneError) {
+      setErrors({ email: emailError, phone: phoneError });
+      return;
+    }
+    setErrors({});
 
     const payload = { ...answers, submittedAt: new Date().toISOString() };
 
@@ -217,25 +258,59 @@ export default function QualifierForm() {
                       }
                       className={inputClass}
                     />
-                    <input
-                      type="email"
-                      required
-                      placeholder="Email"
-                      value={answers.email}
-                      onChange={(e) =>
-                        setAnswers((p) => ({ ...p, email: e.target.value }))
-                      }
-                      className={inputClass}
-                    />
-                    <CountryPhoneInput
-                      phone={answers.phone}
-                      onPhoneChange={(value) =>
-                        setAnswers((p) => ({ ...p, phone: value }))
-                      }
-                      onCountryChange={(dialCode) =>
-                        setAnswers((p) => ({ ...p, countryCode: dialCode }))
-                      }
-                    />
+                    <div>
+                      <input
+                        type="email"
+                        required
+                        placeholder="Email"
+                        value={answers.email}
+                        aria-invalid={Boolean(errors.email)}
+                        onChange={(e) => {
+                          setAnswers((p) => ({ ...p, email: e.target.value }));
+                          setErrors((p) => ({ ...p, email: undefined }));
+                        }}
+                        onBlur={() =>
+                          setErrors((p) => ({
+                            ...p,
+                            email: answers.email
+                              ? validateEmail(answers.email)
+                              : undefined,
+                          }))
+                        }
+                        className={errors.email ? inputClassError : inputClass}
+                      />
+                      {errors.email && (
+                        <p role="alert" className="mt-1.5 text-xs text-red-400">
+                          {errors.email}
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <CountryPhoneInput
+                        phone={answers.phone}
+                        onPhoneChange={(value) => {
+                          setAnswers((p) => ({ ...p, phone: value }));
+                          setErrors((p) => ({ ...p, phone: undefined }));
+                        }}
+                        onCountryChange={(dialCode) =>
+                          setAnswers((p) => ({ ...p, countryCode: dialCode }))
+                        }
+                        onPhoneBlur={() =>
+                          setErrors((p) => ({
+                            ...p,
+                            phone: answers.phone
+                              ? validatePhone(answers.phone, answers.countryCode)
+                              : undefined,
+                          }))
+                        }
+                        invalid={Boolean(errors.phone)}
+                      />
+                      {errors.phone && (
+                        <p role="alert" className="mt-1.5 text-xs text-red-400">
+                          {errors.phone}
+                        </p>
+                      )}
+                    </div>
                   </div>
 
                   <button
@@ -253,28 +328,12 @@ export default function QualifierForm() {
       )}
 
       {showCalendly && (
-        <div
-          className="fixed inset-0 z-[60] bg-background/90 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => setShowCalendly(false)}
-        >
-          <div
-            className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-foreground"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setShowCalendly(false)}
-              aria-label="Close booking widget"
-              className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center bg-background text-foreground text-lg leading-none hover:bg-accent transition-colors"
-            >
-              ×
-            </button>
-            <InlineWidget
-              url={CALENDLY_URL}
-              styles={{ height: "700px", minWidth: "320px" }}
-            />
-          </div>
-        </div>
+        <PopupModal
+          url={CALENDLY_URL}
+          open={showCalendly}
+          onModalClose={() => setShowCalendly(false)}
+          rootElement={document.body}
+        />
       )}
     </>
   );

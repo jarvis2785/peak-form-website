@@ -41,3 +41,39 @@ body {
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   }
 }
+
+/* Compact centered Calendly popup (react-calendly PopupModal overrides).
+   The library injects plain (non-!important) rules, including a <975px
+   full-bleed media query — these !important declarations win everywhere. */
+.calendly-overlay {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.calendly-overlay .calendly-popup {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: calc(100vw - 2rem) !important;
+  min-width: 0 !important;
+  max-width: 640px !important;
+  height: 85vh !important;
+  max-height: 85vh !important;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.calendly-overlay .calendly-popup-close {
+  top: calc(7.5vh + 12px) !important;
+  right: calc((100vw - min(640px, 100vw - 2rem)) / 2 + 12px) !important;
+  width: 28px !important;
+  height: 28px !important;
+  background-color: rgba(10, 10, 11, 0.85) !important;
+  background-size: 11px !important;
+  background-position: center !important;
+  border-radius: 9999px;
+  z-index: 2;
+}

@@ -13,10 +13,14 @@ export default function CountryPhoneInput({
   phone,
   onPhoneChange,
   onCountryChange,
+  onPhoneBlur,
+  invalid = false,
 }: {
   phone: string;
   onPhoneChange: (value: string) => void;
   onCountryChange: (dialCode: string) => void;
+  onPhoneBlur?: () => void;
+  invalid?: boolean;
 }) {
   const [country, setCountry] = useState<Country>(DEFAULT_COUNTRY);
   const [open, setOpen] = useState(false);
@@ -129,7 +133,13 @@ export default function CountryPhoneInput({
         placeholder="Phone Number"
         value={phone}
         onChange={(e) => onPhoneChange(e.target.value)}
-        className={`${fieldClass} flex-1`}
+        onBlur={onPhoneBlur}
+        aria-invalid={invalid}
+        className={`${
+          invalid
+            ? "w-full bg-transparent border border-red-500 focus:border-red-500 outline-none px-4 py-3 text-sm placeholder:text-foreground/40 transition-colors"
+            : fieldClass
+        } flex-1`}
       />
     </div>
   );
