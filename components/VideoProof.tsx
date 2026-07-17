@@ -8,7 +8,7 @@ import TiltCard from "./TiltCard";
 
 const videos = [
   { id: "mMxPbexws-8", caption: "Moksh Vasant — Meteoric Boost" },
-  { id: "ZqeyHPCa5-Q", caption: "Melvin — Entrepreneur" },
+  { id: "ZqeyHPCa5-Q", caption: "Melvyn — LessonForge" },
 ];
 
 function VideoCard({ id, caption }: { id: string; caption: string }) {
