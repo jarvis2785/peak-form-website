@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import VideoProof from "@/components/VideoProof";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
+import CommunityWins from "@/components/CommunityWins";
 import Protocol from "@/components/Protocol";
 import ForNotFor from "@/components/ForNotFor";
 import CTAButton from "@/components/CTAButton";
@@ -18,6 +19,7 @@ export default function Home() {
         <Hero />
         <VideoProof />
         <TestimonialCarousel />
+        <CommunityWins />
         <Protocol />
         <ForNotFor />
 
