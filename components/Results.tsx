@@ -36,6 +36,7 @@ export const testimonials: Testimonial[] = [
     instagramUrl: "https://www.instagram.com/p/DXMOFDyDS6b/?img_index=1",
   },
   {
+    photo: "/images/gideon-abhishek.jpg",
     name: "Gideon Abhishek",
     credential: "Masters student, Sydney",
     quote:
@@ -44,6 +45,7 @@ export const testimonials: Testimonial[] = [
     instagramUrl: "https://www.instagram.com/p/DWQ3iUejf6x/?img_index=1",
   },
   {
+    photo: "/images/dhruv-singh.jpg",
     name: "Dhruv Singh",
     credential: "19-year-old Private Pilot, United States",
     quote:
