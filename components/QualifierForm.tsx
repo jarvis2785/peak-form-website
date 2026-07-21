@@ -44,7 +44,11 @@ const GOAL_OPTIONS = [
 
 const TIMING_OPTIONS = ["This Week", "Next Week", "This Month"];
 
-const BUDGET_OPTIONS = ["$1,000 - $1,500", "$1,500 - $2,000", "$2,000+"];
+const BUDGET_OPTIONS = [
+  { label: "$1,000 - $1,500", value: "$1000-$1500" },
+  { label: "$1,500 - $2,000", value: "$1500-$2000" },
+  { label: "$2,000+", value: "$2000+" },
+];
 
 type Answers = {
   goal: string;
@@ -231,18 +235,18 @@ export default function QualifierForm() {
                   <div className="grid gap-3 mb-8">
                     {BUDGET_OPTIONS.map((opt) => (
                       <button
-                        key={opt}
+                        key={opt.value}
                         type="button"
                         onClick={() =>
-                          setAnswers((prev) => ({ ...prev, budget: opt }))
+                          setAnswers((prev) => ({ ...prev, budget: opt.value }))
                         }
                         className={
-                          answers.budget === opt
+                          answers.budget === opt.value
                             ? optionClassSelected
                             : optionClass
                         }
                       >
-                        {opt}
+                        {opt.label}
                       </button>
                     ))}
                   </div>
