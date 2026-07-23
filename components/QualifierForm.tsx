@@ -153,7 +153,7 @@ export default function QualifierForm() {
       ) : (
         <div className="border border-foreground/15 bg-foreground/[0.02] p-8 md:p-12">
           <p className="text-center text-sm text-muted mb-8">
-            Takes 60 seconds. We only work with founders serious about this.
+            Takes 60 seconds. We only work with founders who are serious about this.
           </p>
 
           <div className="mb-10">
