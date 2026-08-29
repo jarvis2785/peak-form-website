@@ -1,16 +1,11 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { PopupModal } from "react-calendly";
 import CountryPhoneInput from "./CountryPhoneInput";
-
-const CALENDLY_URL = "https://calendly.com/peakform-dhanil/1-on-1-with-dhanil";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// National-number digit counts per dial code; anything unlisted falls back
-// to the E.164-ish 7–14 range.
 const PHONE_LENGTH_RULES: Record<string, { min: number; max: number }> = {
   "+91": { min: 10, max: 10 },
   "+1": { min: 10, max: 10 },
@@ -50,9 +45,16 @@ const BUDGET_OPTIONS = [
   { label: "$2,000+", value: "$2000+" },
 ];
 
+const TOTAL_STEPS = 4;
+
 type Answers = {
   goal: string;
   timing: string;
+  instagram: string;
+  business: string;
+  struggle: string;
+  revenue: string;
+  dreamPhysique: string;
   budget: string;
   name: string;
   email: string;
@@ -63,6 +65,11 @@ type Answers = {
 const initialAnswers: Answers = {
   goal: "",
   timing: "",
+  instagram: "",
+  business: "",
+  struggle: "",
+  revenue: "",
+  dreamPhysique: "",
   budget: "",
   name: "",
   email: "",
@@ -82,6 +89,9 @@ const inputClass =
 const inputClassError =
   "w-full bg-transparent border border-red-500 focus:border-red-500 outline-none px-4 py-3 text-sm placeholder:text-foreground/40 transition-colors";
 
+const textareaClass =
+  "w-full bg-transparent border border-foreground/20 focus:border-accent outline-none px-4 py-3 text-sm placeholder:text-foreground/40 transition-colors resize-none";
+
 const stepTransition = {
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
@@ -93,25 +103,22 @@ export default function QualifierForm() {
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
   const [submitted, setSubmitted] = useState(false);
-  const [showCalendly, setShowCalendly] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
-
-  useEffect(() => {
-    document.body.style.overflow = showCalendly ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [showCalendly]);
 
   const selectAndAdvance = (field: "goal" | "timing", value: string) => {
     setAnswers((prev) => ({ ...prev, [field]: value }));
     setTimeout(() => setStep((s) => s + 1), 300);
   };
 
+  const step3Valid =
+    answers.instagram.trim() !== "" &&
+    answers.business.trim() !== "" &&
+    answers.struggle.trim() !== "" &&
+    answers.dreamPhysique.trim() !== "";
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Invalid email or phone blocks the webhook AND the Calendly popup.
     const emailError = validateEmail(answers.email);
     const phoneError = validatePhone(answers.phone, answers.countryCode);
     if (emailError || phoneError) {
@@ -122,7 +129,6 @@ export default function QualifierForm() {
 
     const payload = { ...answers, submittedAt: new Date().toISOString() };
 
-    // WEBHOOK INTEGRATION POINT - connect to Make.com here
     fetch("https://hook.us2.make.com/a91dnsl35k4fcjnklgh9x6u1w7ymnvxq", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -132,213 +138,288 @@ export default function QualifierForm() {
     });
 
     setSubmitted(true);
-    setShowCalendly(true);
   };
 
+  if (submitted) {
+    return (
+      <div className="border border-foreground/15 bg-foreground/[0.02] p-10 md:p-16 text-center">
+        <p className="mb-3 text-xs md:text-sm font-medium uppercase tracking-[0.08em] text-accent-bright">
+          Application Submitted ✓
+        </p>
+        <h3 className="font-display font-bold text-2xl md:text-4xl tracking-[-0.02em] leading-[1.05]">
+          We&apos;ll Be In Touch
+        </h3>
+        <p className="mt-6 text-muted max-w-md mx-auto leading-relaxed">
+          Our team will review your application and get back to you within 24 hours.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {submitted ? (
-        <div className="border border-foreground/15 bg-foreground/[0.02] p-10 md:p-16 text-center">
-          <p className="mb-3 text-xs md:text-sm font-medium uppercase tracking-[0.08em] text-accent-bright">
-            Confirmed
-          </p>
-          <h3 className="font-display font-bold text-2xl md:text-4xl tracking-[-0.02em] leading-[1.05]">
-            Application Received
-          </h3>
-          <p className="mt-6 text-muted max-w-md mx-auto leading-relaxed">
-            A member of Dhanil&apos;s team will reach out within 24 hours to
-            confirm your call.
-          </p>
-        </div>
-      ) : (
-        <div className="border border-foreground/15 bg-foreground/[0.02] p-8 md:p-12">
-          <p className="text-center text-sm text-muted mb-8">
-            Takes 60 seconds. We only work with founders who are serious about this.
-          </p>
+    <div className="border border-foreground/15 bg-foreground/[0.02] p-8 md:p-12">
+      <p className="text-center text-sm text-muted mb-8">
+        Takes 60 seconds. We only work with founders who are serious about this.
+      </p>
 
-          <div className="mb-10">
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-xs font-medium uppercase tracking-[0.08em] text-accent-bright">
-                Step {step} of 3
-              </p>
-              {step > 1 && (
+      <div className="mb-10">
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-xs font-medium uppercase tracking-[0.08em] text-accent-bright">
+            Step {step} of {TOTAL_STEPS}
+          </p>
+          {step > 1 && (
+            <button
+              type="button"
+              onClick={() => setStep((s) => s - 1)}
+              className="text-xs font-medium uppercase tracking-[0.08em] text-foreground/50 hover:text-foreground transition-colors"
+            >
+              ← Back
+            </button>
+          )}
+        </div>
+        <div className="h-[2px] w-full bg-foreground/10">
+          <div
+            className="h-full bg-accent transition-all duration-300"
+            style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+          />
+        </div>
+      </div>
+
+      <AnimatePresence mode="wait">
+        {step === 1 && (
+          <motion.div key="step1" {...stepTransition}>
+            <h3 className="font-display font-bold text-xl md:text-2xl tracking-[-0.01em] mb-6 leading-tight">
+              What&apos;s your fitness goal?
+            </h3>
+            <div className="grid gap-3">
+              {GOAL_OPTIONS.map((opt) => (
                 <button
+                  key={opt}
                   type="button"
-                  onClick={() => setStep((s) => s - 1)}
-                  className="text-xs font-medium uppercase tracking-[0.08em] text-foreground/50 hover:text-foreground transition-colors"
+                  onClick={() => selectAndAdvance("goal", opt)}
+                  className={answers.goal === opt ? optionClassSelected : optionClass}
                 >
-                  ← Back
+                  {opt}
                 </button>
-              )}
+              ))}
             </div>
-            <div className="h-[2px] w-full bg-foreground/10">
-              <div
-                className="h-full bg-accent transition-all duration-300"
-                style={{ width: `${(step / 3) * 100}%` }}
-              />
+          </motion.div>
+        )}
+
+        {step === 2 && (
+          <motion.div key="step2" {...stepTransition}>
+            <h3 className="font-display font-bold text-xl md:text-2xl tracking-[-0.01em] mb-6 leading-tight">
+              When do you want to get started?
+            </h3>
+            <div className="grid gap-3">
+              {TIMING_OPTIONS.map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => selectAndAdvance("timing", opt)}
+                  className={answers.timing === opt ? optionClassSelected : optionClass}
+                >
+                  {opt}
+                </button>
+              ))}
             </div>
-          </div>
+          </motion.div>
+        )}
 
-          <AnimatePresence mode="wait">
-            {step === 1 && (
-              <motion.div key="step1" {...stepTransition}>
-                <h3 className="font-display font-bold text-xl md:text-2xl tracking-[-0.01em] mb-6 leading-tight">
-                  What&apos;s your fitness goal?
-                </h3>
-                <div className="grid gap-3">
-                  {GOAL_OPTIONS.map((opt) => (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => selectAndAdvance("goal", opt)}
-                      className={
-                        answers.goal === opt ? optionClassSelected : optionClass
-                      }
-                    >
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-            )}
+        {step === 3 && (
+          <motion.div key="step3" {...stepTransition}>
+            <h3 className="font-display font-bold text-xl md:text-2xl tracking-[-0.01em] mb-6 leading-tight">
+              Tell us a bit about yourself
+            </h3>
+            <div className="space-y-5">
+              <div>
+                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
+                  What is your Instagram profile name?
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="@yourhandle"
+                  value={answers.instagram}
+                  onChange={(e) =>
+                    setAnswers((p) => ({ ...p, instagram: e.target.value }))
+                  }
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
+                  What business are you currently running or scaling?
+                </label>
+                <p className="text-xs text-foreground/40 mb-2">
+                  This helps us understand your entrepreneurial journey and time constraints.
+                </p>
+                <textarea
+                  required
+                  rows={3}
+                  placeholder="Describe your business..."
+                  value={answers.business}
+                  onChange={(e) =>
+                    setAnswers((p) => ({ ...p, business: e.target.value }))
+                  }
+                  className={textareaClass}
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
+                  What&apos;s your current biggest struggle when it comes to staying consistent with fitness and building the physique you want?
+                </label>
+                <textarea
+                  required
+                  rows={4}
+                  placeholder="Be honest — this helps us help you..."
+                  value={answers.struggle}
+                  onChange={(e) =>
+                    setAnswers((p) => ({ ...p, struggle: e.target.value }))
+                  }
+                  className={textareaClass}
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
+                  What is your current monthly revenue? (if any)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. $10k/month, pre-revenue, etc."
+                  value={answers.revenue}
+                  onChange={(e) =>
+                    setAnswers((p) => ({ ...p, revenue: e.target.value }))
+                  }
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
+                  What is your dream physique and how do you want to feel in your body 4 months from now?
+                </label>
+                <textarea
+                  required
+                  rows={4}
+                  placeholder="Paint the picture..."
+                  value={answers.dreamPhysique}
+                  onChange={(e) =>
+                    setAnswers((p) => ({ ...p, dreamPhysique: e.target.value }))
+                  }
+                  className={textareaClass}
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              disabled={!step3Valid}
+              onClick={() => setStep(4)}
+              className="w-full mt-8 px-8 py-4 text-sm md:text-base tracking-[0.08em] uppercase font-semibold transition-all duration-200 bg-accent text-foreground shadow-[0_0_36px_-8px_rgba(59,90,135,0.65)] hover:bg-foreground hover:text-background hover:shadow-[0_0_44px_-8px_rgba(59,90,135,0.5)] hover:scale-[1.03] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-accent disabled:hover:text-foreground disabled:hover:scale-100 disabled:shadow-none"
+            >
+              Continue
+            </button>
+          </motion.div>
+        )}
 
-            {step === 2 && (
-              <motion.div key="step2" {...stepTransition}>
-                <h3 className="font-display font-bold text-xl md:text-2xl tracking-[-0.01em] mb-6 leading-tight">
-                  When do you want to get started?
-                </h3>
-                <div className="grid gap-3">
-                  {TIMING_OPTIONS.map((opt) => (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => selectAndAdvance("timing", opt)}
-                      className={
-                        answers.timing === opt ? optionClassSelected : optionClass
-                      }
-                    >
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-            )}
+        {step === 4 && (
+          <motion.div key="step4" {...stepTransition}>
+            <h3 className="font-display font-bold text-xl md:text-2xl tracking-[-0.01em] mb-6 leading-tight">
+              If we believe you&apos;re a good fit, what would you be comfortable investing to get to your dream physique?
+            </h3>
 
-            {step === 3 && (
-              <motion.div key="step3" {...stepTransition}>
-                <h3 className="font-display font-bold text-xl md:text-2xl tracking-[-0.01em] mb-6 leading-tight">
-                  If we believe you&apos;re a good fit, what would you be
-                  comfortable investing to get to your dream physique?
-                </h3>
-
-                <form onSubmit={handleSubmit}>
-                  <div className="grid gap-3 mb-8">
-                    {BUDGET_OPTIONS.map((opt) => (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        onClick={() =>
-                          setAnswers((prev) => ({ ...prev, budget: opt.value }))
-                        }
-                        className={
-                          answers.budget === opt.value
-                            ? optionClassSelected
-                            : optionClass
-                        }
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="space-y-4">
-                    <input
-                      type="text"
-                      required
-                      placeholder="Full Name"
-                      value={answers.name}
-                      onChange={(e) =>
-                        setAnswers((p) => ({ ...p, name: e.target.value }))
-                      }
-                      className={inputClass}
-                    />
-                    <div>
-                      <input
-                        type="email"
-                        required
-                        placeholder="Email"
-                        value={answers.email}
-                        aria-invalid={Boolean(errors.email)}
-                        onChange={(e) => {
-                          setAnswers((p) => ({ ...p, email: e.target.value }));
-                          setErrors((p) => ({ ...p, email: undefined }));
-                        }}
-                        onBlur={() =>
-                          setErrors((p) => ({
-                            ...p,
-                            email: answers.email
-                              ? validateEmail(answers.email)
-                              : undefined,
-                          }))
-                        }
-                        className={errors.email ? inputClassError : inputClass}
-                      />
-                      {errors.email && (
-                        <p role="alert" className="mt-1.5 text-xs text-red-400">
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
-                    <div>
-                      <CountryPhoneInput
-                        phone={answers.phone}
-                        onPhoneChange={(value) => {
-                          setAnswers((p) => ({ ...p, phone: value }));
-                          setErrors((p) => ({ ...p, phone: undefined }));
-                        }}
-                        onCountryChange={(dialCode) =>
-                          setAnswers((p) => ({ ...p, countryCode: dialCode }))
-                        }
-                        onPhoneBlur={() =>
-                          setErrors((p) => ({
-                            ...p,
-                            phone: answers.phone
-                              ? validatePhone(answers.phone, answers.countryCode)
-                              : undefined,
-                          }))
-                        }
-                        invalid={Boolean(errors.phone)}
-                      />
-                      {errors.phone && (
-                        <p role="alert" className="mt-1.5 text-xs text-red-400">
-                          {errors.phone}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
+            <form onSubmit={handleSubmit}>
+              <div className="grid gap-3 mb-8">
+                {BUDGET_OPTIONS.map((opt) => (
                   <button
-                    type="submit"
-                    disabled={!answers.budget}
-                    className="w-full mt-6 px-8 py-4 text-sm md:text-base tracking-[0.08em] uppercase font-semibold transition-all duration-200 bg-accent text-foreground shadow-[0_0_36px_-8px_rgba(59,90,135,0.65)] hover:bg-foreground hover:text-background hover:shadow-[0_0_44px_-8px_rgba(59,90,135,0.5)] hover:scale-[1.03] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-accent disabled:hover:text-foreground disabled:hover:scale-100 disabled:shadow-none"
+                    key={opt.value}
+                    type="button"
+                    onClick={() =>
+                      setAnswers((prev) => ({ ...prev, budget: opt.value }))
+                    }
+                    className={
+                      answers.budget === opt.value ? optionClassSelected : optionClass
+                    }
                   >
-                    Check Call Availability
+                    {opt.label}
                   </button>
-                </form>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      )}
+                ))}
+              </div>
 
-      {showCalendly && (
-        <PopupModal
-          url={CALENDLY_URL}
-          open={showCalendly}
-          onModalClose={() => setShowCalendly(false)}
-          rootElement={document.body}
-        />
-      )}
-    </>
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  required
+                  placeholder="Full Name"
+                  value={answers.name}
+                  onChange={(e) =>
+                    setAnswers((p) => ({ ...p, name: e.target.value }))
+                  }
+                  className={inputClass}
+                />
+                <div>
+                  <input
+                    type="email"
+                    required
+                    placeholder="Email"
+                    value={answers.email}
+                    aria-invalid={Boolean(errors.email)}
+                    onChange={(e) => {
+                      setAnswers((p) => ({ ...p, email: e.target.value }));
+                      setErrors((p) => ({ ...p, email: undefined }));
+                    }}
+                    onBlur={() =>
+                      setErrors((p) => ({
+                        ...p,
+                        email: answers.email ? validateEmail(answers.email) : undefined,
+                      }))
+                    }
+                    className={errors.email ? inputClassError : inputClass}
+                  />
+                  {errors.email && (
+                    <p role="alert" className="mt-1.5 text-xs text-red-400">
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <CountryPhoneInput
+                    phone={answers.phone}
+                    onPhoneChange={(value) => {
+                      setAnswers((p) => ({ ...p, phone: value }));
+                      setErrors((p) => ({ ...p, phone: undefined }));
+                    }}
+                    onCountryChange={(dialCode) =>
+                      setAnswers((p) => ({ ...p, countryCode: dialCode }))
+                    }
+                    onPhoneBlur={() =>
+                      setErrors((p) => ({
+                        ...p,
+                        phone: answers.phone
+                          ? validatePhone(answers.phone, answers.countryCode)
+                          : undefined,
+                      }))
+                    }
+                    invalid={Boolean(errors.phone)}
+                  />
+                  {errors.phone && (
+                    <p role="alert" className="mt-1.5 text-xs text-red-400">
+                      {errors.phone}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={!answers.budget}
+                className="w-full mt-6 px-8 py-4 text-sm md:text-base tracking-[0.08em] uppercase font-semibold transition-all duration-200 bg-accent text-foreground shadow-[0_0_36px_-8px_rgba(59,90,135,0.65)] hover:bg-foreground hover:text-background hover:shadow-[0_0_44px_-8px_rgba(59,90,135,0.5)] hover:scale-[1.03] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-accent disabled:hover:text-foreground disabled:hover:scale-100 disabled:shadow-none"
+              >
+                Submit
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
