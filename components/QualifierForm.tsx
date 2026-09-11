@@ -114,6 +114,7 @@ export default function QualifierForm() {
     answers.instagram.trim() !== "" &&
     answers.business.trim() !== "" &&
     answers.struggle.trim() !== "" &&
+    answers.revenue.trim() !== "" &&
     answers.dreamPhysique.trim() !== "";
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -286,6 +287,7 @@ export default function QualifierForm() {
                 </label>
                 <input
                   type="text"
+                  required
                   placeholder="e.g. $10k/month, pre-revenue, etc."
                   value={answers.revenue}
                   onChange={(e) =>
