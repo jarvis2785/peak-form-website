@@ -50,11 +50,7 @@ const TOTAL_STEPS = 4;
 type Answers = {
   goal: string;
   timing: string;
-  instagram: string;
-  business: string;
-  struggle: string;
-  revenue: string;
-  dreamPhysique: string;
+  stopper: string;
   budget: string;
   name: string;
   email: string;
@@ -65,11 +61,7 @@ type Answers = {
 const initialAnswers: Answers = {
   goal: "",
   timing: "",
-  instagram: "",
-  business: "",
-  struggle: "",
-  revenue: "",
-  dreamPhysique: "",
+  stopper: "",
   budget: "",
   name: "",
   email: "",
@@ -110,12 +102,7 @@ export default function QualifierForm() {
     setTimeout(() => setStep((s) => s + 1), 300);
   };
 
-  const step3Valid =
-    answers.instagram.trim() !== "" &&
-    answers.business.trim() !== "" &&
-    answers.struggle.trim() !== "" &&
-    answers.revenue.trim() !== "" &&
-    answers.dreamPhysique.trim() !== "";
+  const step3Valid = answers.stopper.trim() !== "";
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -230,87 +217,22 @@ export default function QualifierForm() {
         {step === 3 && (
           <motion.div key="step3" {...stepTransition}>
             <h3 className="font-display font-bold text-xl md:text-2xl tracking-[-0.01em] mb-6 leading-tight">
-              Tell us a bit about yourself
+              One last thing
             </h3>
-            <div className="space-y-5">
-              <div>
-                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
-                  What is your Instagram profile name?
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="@yourhandle"
-                  value={answers.instagram}
-                  onChange={(e) =>
-                    setAnswers((p) => ({ ...p, instagram: e.target.value }))
-                  }
-                  className={inputClass}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
-                  What business are you currently running or scaling?
-                </label>
-                <p className="text-xs text-foreground/40 mb-2">
-                  This helps us understand your entrepreneurial journey and time constraints.
-                </p>
-                <textarea
-                  required
-                  rows={3}
-                  placeholder="Describe your business..."
-                  value={answers.business}
-                  onChange={(e) =>
-                    setAnswers((p) => ({ ...p, business: e.target.value }))
-                  }
-                  className={textareaClass}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
-                  What&apos;s your current biggest struggle when it comes to staying consistent with fitness and building the physique you want?
-                </label>
-                <textarea
-                  required
-                  rows={4}
-                  placeholder="Be honest — this helps us help you..."
-                  value={answers.struggle}
-                  onChange={(e) =>
-                    setAnswers((p) => ({ ...p, struggle: e.target.value }))
-                  }
-                  className={textareaClass}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
-                  What is your current monthly revenue? (if any)
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. $10k/month, pre-revenue, etc."
-                  value={answers.revenue}
-                  onChange={(e) =>
-                    setAnswers((p) => ({ ...p, revenue: e.target.value }))
-                  }
-                  className={inputClass}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
-                  What is your dream physique and how do you want to feel in your body 4 months from now?
-                </label>
-                <textarea
-                  required
-                  rows={4}
-                  placeholder="Paint the picture..."
-                  value={answers.dreamPhysique}
-                  onChange={(e) =>
-                    setAnswers((p) => ({ ...p, dreamPhysique: e.target.value }))
-                  }
-                  className={textareaClass}
-                />
-              </div>
+            <div>
+              <label className="block text-xs font-medium uppercase tracking-[0.08em] text-foreground/60 mb-2">
+                What would stop you from getting started as soon as possible?
+              </label>
+              <textarea
+                required
+                rows={4}
+                placeholder="Be honest..."
+                value={answers.stopper}
+                onChange={(e) =>
+                  setAnswers((p) => ({ ...p, stopper: e.target.value }))
+                }
+                className={textareaClass}
+              />
             </div>
             <button
               type="button"
