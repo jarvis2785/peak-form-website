@@ -34,6 +34,14 @@ export default function Footer() {
           @peakformhq
         </Link>
       </div>
+      <div className="w-full flex justify-center gap-6 text-xs text-foreground/40 mt-6 sm:mt-0">
+        <Link href="/terms" className="hover:text-foreground/70 transition-colors">
+          Terms of Service
+        </Link>
+        <Link href="/privacy" className="hover:text-foreground/70 transition-colors">
+          Privacy Policy
+        </Link>
+      </div>
     </footer>
   );
 }
